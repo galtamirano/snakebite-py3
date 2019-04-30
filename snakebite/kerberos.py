@@ -32,13 +32,12 @@ Bolke de Bruin (bolke@xs4all.nl)
 # python 3 support
 from __future__ import absolute_import, print_function, division
 
-import krbV
+import gssapi
 
 class Kerberos:
     def __init__(self):
-        self.ctx = krbV.default_context()
-        self.ccache = self.ctx.default_ccache()
+        self.creds = gssapi.creds.Credentials(usage='initiate')
 
     def user_principal(self):
-        return self.ccache.principal()
+        return str(self.creds.name)
 
