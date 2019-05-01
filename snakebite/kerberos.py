@@ -39,6 +39,6 @@ class Kerberos:
         self.creds = gssapi.creds.Credentials(usage='initiate')
 
     def user_principal(self):
-        cred = str(self.creds.name).split("@")
-        return cred[0]
+        cred = "hdfs/{}".format(str(self.creds.name))
+        return cred
 
