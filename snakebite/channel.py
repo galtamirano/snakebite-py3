@@ -194,8 +194,9 @@ class SocketRpcChannel(RpcChannel):
 
             kerberos = Kerberos()
             self.effective_user = effective_user or kerberos.user_principal()
-            log.debug("Imprimiendo {}".format(self.effective_user))
-            log.debug("Imprimiendo2 {}".format(kerberos.user_principal()))
+            if log.getEffectiveLevel() == logging.DEBUG:
+                log.debug("Imprimiendo {}".format(self.effective_user))
+                log.debug("Imprimiendo2 {}".format(kerberos.user_principal()))
         else: 
             self.effective_user = effective_user or get_current_username()
         self.sock_connect_timeout = sock_connect_timeout
