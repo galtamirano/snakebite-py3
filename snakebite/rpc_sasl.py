@@ -102,12 +102,13 @@ class SaslRpcClient:
           if res.state == 1:
             mechs = []
             for auth in res.auths:
-                if auth.method != "SIMPLE":
-                    mechs.append(auth.mechanism)
+                mechs.append(auth.mechanism)
 
             log.debug("Available mechs: %s" % (",".join(mechs)))
             s_mechs = str(",".join(mechs))
-            ret, chosen_mech, initial_response = self.sasl.start(s_mechs)
+            if "GSSAPI" in s_mechs:
+                chosen_mech = "GSSAPI"
+            #ret, chosen_mech, initial_response = self.sasl.start(s_mechs)
             log.debug("Chosen mech: %s" % chosen_mech)
 
             initiate = RpcSaslProto()
