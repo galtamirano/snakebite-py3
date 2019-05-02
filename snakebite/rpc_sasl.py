@@ -88,7 +88,7 @@ class SaslRpcClient:
 
         negotiate = RpcSaslProto()
         negotiate.state = 1
-        elf._send_sasl_message(negotiate)
+        self._send_sasl_message(negotiate)
 
         self.sasl = sasl.Client()
         self.sasl.setAttr("service", service)
