@@ -88,7 +88,7 @@ class SaslRpcClient:
 
         negotiate = RpcSaslProto()
         negotiate.state = 1
-        self._send_sasl_message(negotiate)
+        elf._send_sasl_message(negotiate)
 
         self.sasl = sasl.Client()
         self.sasl.setAttr("service", service)
@@ -102,7 +102,8 @@ class SaslRpcClient:
           if res.state == 1:
             mechs = []
             for auth in res.auths:
-                mechs.append(auth.mechanism)
+                if auth.method != "SIMPLE":
+                    mechs.append(auth.mechanism)
 
             log.debug("Available mechs: %s" % (",".join(mechs)))
             s_mechs = str(",".join(mechs))
