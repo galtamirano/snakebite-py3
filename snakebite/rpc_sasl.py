@@ -102,13 +102,12 @@ class SaslRpcClient:
           if res.state == 1:
             mechs = []
             for auth in res.auths:
-                mechs.append(auth.mechanism)
+                if auth.method == "KERBEROS":
+                    mechs.append(auth.mechanism)
 
             log.debug("Available mechs: %s" % (",".join(mechs)))
             s_mechs = str(",".join(mechs))
-            if "GSSAPI" in s_mechs:
-                chosen_mech = "GSSAPI"
-            #ret, chosen_mech, initial_response = self.sasl.start(s_mechs)
+            ret, chosen_mech, initial_response = self.sasl.start()
             log.debug("Chosen mech: %s" % chosen_mech)
 
             initiate = RpcSaslProto()
